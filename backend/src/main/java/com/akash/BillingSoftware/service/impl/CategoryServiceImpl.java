@@ -5,8 +5,10 @@ import com.akash.BillingSoftware.io.CategoryRequest;
 import com.akash.BillingSoftware.io.CategoryResponse;
 import com.akash.BillingSoftware.repo.CategoryRepository;
 import com.akash.BillingSoftware.service.CategoryService;
+import com.akash.BillingSoftware.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +20,19 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final FileUploadService fileUploadService;
 
     @Override
-    public CategoryResponse addCategory(CategoryRequest request) {
+    public CategoryResponse addCategory(CategoryRequest request, MultipartFile file) {
+        String imgUrl = fileUploadService.uploadFile(file);
+
         CategoryEntity newCategory = convertToEntity(request);
-        categoryRepository.save(newCategory);
-        return convertToResponse(newCategory);
+        newCategory.setImgUrl(imgUrl);
+
+        CategoryEntity savedCategory = categoryRepository.save(newCategory);
+        return convertToResponse(savedCategory);
     }
+
 
     @Override
     public List<CategoryResponse> readCategories(){
@@ -39,6 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(String categoryId){
         CategoryEntity entity = categoryRepository.findByCategoryId(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category Not Found : " + categoryId));
+        fileUploadService.deleteFile(entity.getImgUrl());
         categoryRepository.delete(entity);
     }
 
