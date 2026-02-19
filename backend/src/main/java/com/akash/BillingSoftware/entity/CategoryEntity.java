@@ -24,13 +24,18 @@ public class CategoryEntity {
 
     @Column(unique = true)
     private String categoryId;
+
     @Column(unique = true)
     private String name;
+
     private String description;
     private String imgUrl;
+    private String imgPublicId; // For Cloudinary delete/update
+
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 }

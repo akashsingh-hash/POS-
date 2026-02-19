@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import tools.jackson.databind.ObjectMapper;
 
-
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/categories")
@@ -23,46 +23,54 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final FileUploadService fileService;
 
-    @PostMapping
+    @PostMapping(consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponse addCategory(@RequestPart("category") String categoryString,
-                                        @RequestPart("file") MultipartFile file) {
-        // Logic to add a new category
-        // This is just a placeholder response, you would replace it with actual logic
-        ObjectMapper objectMapper = new ObjectMapper();
-        try{
-            CategoryRequest categoryRequest = objectMapper.readValue(categoryString,CategoryRequest.class);
-            return categoryService.addCategory(categoryRequest,file);
-        }
-        catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Exception occured while parsing in the json");
-        }
+    public CategoryResponse addCategory(
+            @RequestParam("category") String categoryJson,
+            @RequestParam("file") MultipartFile file) {
 
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            CategoryRequest categoryRequest =
+                    objectMapper.readValue(categoryJson, CategoryRequest.class);
+
+            return categoryService.addCategory(categoryRequest, file);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // <-- add this
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid category JSON"
+            );
+        }
     }
 
+
+
     @GetMapping
-    public List<CategoryResponse> fetchCategories(){
+    public List<CategoryResponse> fetchCategories() {
         return categoryService.readCategories();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{categoryId}")
-    public void delete(@PathVariable String categoryId){
-        try{
+    public void delete(@PathVariable String categoryId) {
+        try {
             categoryService.deleteCategory(categoryId);
-        }
-        catch(Exception e){
-            throw new ResponseStatusException
-                    (HttpStatus.NOT_FOUND,"Category Not Found: "
-                            + categoryId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Category Not Found: " + categoryId
+            );
         }
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = "multipart/form-data") // ✅ Added consumes
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileUrl = fileService.uploadFile(file);
+        Map<String, String> res = fileService.uploadFile(file);
+
+        String fileUrl = res.get("url");   // ✅ FIXED KEY (was secure_url)
+
         return ResponseEntity.ok(fileUrl);
     }
-
 }

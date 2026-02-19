@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,52 +22,60 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
 
+    // Add new category
     @Override
     public CategoryResponse addCategory(CategoryRequest request, MultipartFile file) {
-        String imgUrl = fileUploadService.uploadFile(file);
+        Map<String, String> uploadResult = fileUploadService.uploadFile(file);
 
         CategoryEntity newCategory = convertToEntity(request);
-        newCategory.setImgUrl(imgUrl);
+        newCategory.setImgUrl(uploadResult.get("url"));
+        newCategory.setImgPublicId(uploadResult.get("publicId"));
 
         CategoryEntity savedCategory = categoryRepository.save(newCategory);
         return convertToResponse(savedCategory);
     }
 
-
+    // Read all categories
     @Override
-    public List<CategoryResponse> readCategories(){
+    public List<CategoryResponse> readCategories() {
         return categoryRepository.findAll()
                 .stream()
-                .map(categoryEntity -> convertToResponse(categoryEntity))
+                .map(this::convertToResponse)
                 .collect(Collectors.toList());
-
     }
 
+    // Delete category
     @Override
-    public void deleteCategory(String categoryId){
+    public void deleteCategory(String categoryId) {
         CategoryEntity entity = categoryRepository.findByCategoryId(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category Not Found : " + categoryId));
-        fileUploadService.deleteFile(entity.getImgUrl());
+
+        // Delete image from Cloudinary
+        if (entity.getImgPublicId() != null && !entity.getImgPublicId().isBlank()) {
+            fileUploadService.deleteFile(entity.getImgPublicId());
+        }
+
         categoryRepository.delete(entity);
     }
 
+    // Convert request DTO → entity
     private CategoryEntity convertToEntity(CategoryRequest request) {
         return CategoryEntity.builder()
-//                550e8400-e29b-41d4-a716-446655440000
                 .categoryId(UUID.randomUUID().toString())
                 .name(request.getName())
                 .description(request.getDescription())
                 .build();
     }
 
-    private CategoryResponse convertToResponse(CategoryEntity categoryEntity) {
+    // Convert entity → response DTO
+    private CategoryResponse convertToResponse(CategoryEntity entity) {
         return CategoryResponse.builder()
-                .categoryId(categoryEntity.getCategoryId())
-                .name(categoryEntity.getName())
-                .description(categoryEntity.getDescription())
-                .createdAt(categoryEntity.getCreatedAt())
-                .updatedAt(categoryEntity.getUpdatedAt())
-                .imgUrl(categoryEntity.getImgUrl())
+                .categoryId(entity.getCategoryId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .imgUrl(entity.getImgUrl())
                 .build();
     }
 }
