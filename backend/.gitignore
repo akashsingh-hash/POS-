@@ -34,3 +34,6 @@ build/
 
 # Uploaded images (runtime files)
 src/main/resources/static/images/
+
+#env file
+.env

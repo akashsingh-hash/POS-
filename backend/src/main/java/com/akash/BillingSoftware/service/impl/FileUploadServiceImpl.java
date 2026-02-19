@@ -1,57 +1,57 @@
 package com.akash.BillingSoftware.service.impl;
 
 import com.akash.BillingSoftware.service.FileUploadService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
 
-    private final String uploadDir = "src/main/resources/static/images/";
+    private final Cloudinary cloudinary;
+
+    public FileUploadServiceImpl(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
 
     @Override
-    public String uploadFile(MultipartFile file) {
+    public Map<String, String> uploadFile(MultipartFile file) {
         try {
             if (file == null || file.isEmpty()) {
                 throw new RuntimeException("File is empty");
             }
 
-            String originalName = file.getOriginalFilename();
-            if (originalName == null || !originalName.contains(".")) {
-                throw new RuntimeException("Invalid file name");
-            }
+            // Upload to Cloudinary
+            Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
 
-            String extension = originalName.substring(originalName.lastIndexOf(".") + 1);
-            String fileName = UUID.randomUUID() + "." + extension;
+            String secureUrl = uploadResult.get("secure_url").toString(); // URL for frontend
+            String publicId = uploadResult.get("public_id").toString();   // Needed for delete/update
 
-            Path filePath = Paths.get(uploadDir, fileName);
-            Files.createDirectories(filePath.getParent());
-            Files.write(filePath, file.getBytes());
+            Map<String, String> result = new HashMap<>();
+            result.put("url", secureUrl);
+            result.put("publicId", publicId);
 
-            return "/images/" + fileName;
+            return result;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException("File upload failed");
         }
     }
 
     @Override
-    public boolean deleteFile(String imgUrl) {
+    public boolean deleteFile(String publicId) {
         try {
-            if (imgUrl == null || imgUrl.isBlank()) {
+            if (publicId == null || publicId.isBlank()) {
                 return false;
             }
 
-            String fileName = Paths.get(imgUrl).getFileName().toString();
-            Path filePath = Paths.get(uploadDir, fileName);
-
-            return Files.deleteIfExists(filePath);
+            Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+            return "ok".equals(result.get("result"));
 
         } catch (IOException e) {
             throw new RuntimeException("File deletion failed");
