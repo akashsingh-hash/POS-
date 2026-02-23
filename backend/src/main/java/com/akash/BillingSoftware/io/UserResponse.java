@@ -7,16 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponse {
-    private String categoryId;
+@Data
+@Builder
+public class UserResponse {
+    private String userID;
     private String name;
-    private String description;
+    private String email;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private String imgUrl;
-    private Integer items;
+    private String role;
 }

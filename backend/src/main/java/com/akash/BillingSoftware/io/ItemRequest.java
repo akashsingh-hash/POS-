@@ -5,18 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponse {
+@Builder
+public class ItemRequest {
+    private  String name;
+    private BigDecimal price;
     private String categoryId;
-    private String name;
     private String description;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-    private String imgUrl;
-    private Integer items;
 }

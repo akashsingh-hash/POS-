@@ -4,6 +4,7 @@ import com.akash.BillingSoftware.entity.CategoryEntity;
 import com.akash.BillingSoftware.io.CategoryRequest;
 import com.akash.BillingSoftware.io.CategoryResponse;
 import com.akash.BillingSoftware.repo.CategoryRepository;
+import com.akash.BillingSoftware.repo.ItemRepository;
 import com.akash.BillingSoftware.service.CategoryService;
 import com.akash.BillingSoftware.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
+    private final ItemRepository itemRepository;
 
     // Add new category
     @Override
@@ -54,7 +56,6 @@ public class CategoryServiceImpl implements CategoryService {
         if (entity.getImgPublicId() != null && !entity.getImgPublicId().isBlank()) {
             fileUploadService.deleteFile(entity.getImgPublicId());
         }
-
         categoryRepository.delete(entity);
     }
 
@@ -76,6 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .imgUrl(entity.getImgUrl())
+                .items(itemRepository.countByCategoryEntity_Id(entity.getId()))
                 .build();
     }
 }

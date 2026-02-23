@@ -75,7 +75,7 @@ const CategoryForm = () => {
 
                         <div className="mb-3">
                             <label htmlFor='name' className='form-label'>Name</label>
-                            <input type="text" name="name" id="name" className='form-control' placeholder='User Name'
+                            <input type="text" name="name" id="name" className='form-control' placeholder='Category Name'
                             onChange={onChangeHandler}
                             value = {data.name}/>
                         </div>
