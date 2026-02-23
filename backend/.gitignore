@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Uploaded images (runtime files)
+src/main/resources/static/images/
+
+#env file
+.env
