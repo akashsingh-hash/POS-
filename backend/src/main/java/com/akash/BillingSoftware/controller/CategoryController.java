@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
     private final FileUploadService fileService;
 
-    @PostMapping(consumes = "multipart/form-data")
+
+    @PostMapping(value = "/admin/categories" ,consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryResponse addCategory(
             @RequestParam("category") String categoryJson,
@@ -37,7 +37,6 @@ public class CategoryController {
             return categoryService.addCategory(categoryRequest, file);
 
         } catch (Exception e) {
-            e.printStackTrace(); // <-- add this
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Invalid category JSON"
@@ -47,13 +46,13 @@ public class CategoryController {
 
 
 
-    @GetMapping
+    @GetMapping("/admin/categories")
     public List<CategoryResponse> fetchCategories() {
         return categoryService.readCategories();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}")
     public void delete(@PathVariable String categoryId) {
         try {
             categoryService.deleteCategory(categoryId);
