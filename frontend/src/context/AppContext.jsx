@@ -6,6 +6,8 @@ export const AppContext = createContext(null);
 
 const AppContextProvider = (props) => {
 
+    const [cartItems,setCartItems] = useState([]);
+
     const [itemsData,setItemsData] = useState([]);
     const [categories, setCategories] = useState([]);
     const [auth,setAuth] = useState({
@@ -13,9 +15,38 @@ const AppContextProvider = (props) => {
         "role" : null
     });
 
+    const addToCart = (item) => {
+        const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
+        if(existingItem){
+            setCartItems(
+                cartItems.map(cartItem => cartItem.name === item.name ? {
+                    ...cartItem, quantity: cartItem.quantity+1
+                } : cartItem
+            )
+            )
+        }
+        else{
+            setCartItems([...cartItems,{...item,quantity:1}]);
+        }
+    }
+
+    const removeFromCart = (itemId) => {
+        setCartItems(cartItems.filter(item => item.itemId !== itemId));
+    }
+
+    const updateQuantity = (itemId,newQuantity) => {
+        setCartItems(cartItems.map(item => item.itemId === itemId ? {...item,quantity:newQuantity}:item))
+    }
+
     useEffect(() => {
     async function loadData() {
         try {
+            if(localStorage.getItem("token") && localStorage.getItem("role")){
+                setAuthData(
+                    localStorage.getItem("token"),
+                    localStorage.getItem("role")
+                )
+            }
             const response = await fetchCategories();
             const itemResponse = await fetchItems();
             setCategories(response?.data || []);
@@ -37,7 +68,11 @@ const AppContextProvider = (props) => {
         auth,
         setAuthData,
         itemsData,
-        setItemsData
+        setItemsData,
+        addToCart,
+        cartItems,
+        removeFromCart,
+        updateQuantity
     };
 
     return (
