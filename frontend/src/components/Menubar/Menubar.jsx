@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Menubar.css"; 
 import { assets } from "../../assets/assets";
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import { AppContext } from "../../context/AppContext";
 
 const Menubar = () => {
+  const navigate = useNavigate();
+  const { setAuthData } = useContext(AppContext);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setAuthData(null, null);
+    navigate("/login");
+  };
+
   return (
     <>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-2">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           <img
             src={assets.logo}
             alt="Logo"
             height="40"
           />
-        </a>
+        </Link>
 
         <button
           className="navbar-toggler"
@@ -57,7 +68,41 @@ const Menubar = () => {
             </li>
           </ul>
 
-          {/* Add the dropdown for userprofile */}
+          {/* User Profile Dropdown */}
+          <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li className="nav-item dropdown">
+              <a 
+                href="#" 
+                className="nav-link dropdown-toggle" 
+                id="navbarDropdown"
+                role="button" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+              >
+                <img src={assets.profile} alt="Profile" height={32} width={32} />
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li>
+                  <Link className="dropdown-item" to="/settings">
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/activity">
+                    Activity Log 
+                  </Link>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={logout}>
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </nav>
       {/* End Navbar */}
