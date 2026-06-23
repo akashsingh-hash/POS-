@@ -38,7 +38,9 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/encode").permitAll()
-                        .requestMatchers("/category","/items").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/categories","/categories/**").permitAll()
+                        .requestMatchers("/items","/items/**").permitAll()
+                        .requestMatchers("/upload").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

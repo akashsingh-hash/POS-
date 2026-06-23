@@ -23,7 +23,7 @@ public class CategoryController {
     private final FileUploadService fileService;
 
 
-    @PostMapping(value = "/admin/categories" ,consumes = "multipart/form-data")
+    @PostMapping(value = "/categories" ,consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryResponse addCategory(
             @RequestParam("category") String categoryJson,
@@ -46,13 +46,13 @@ public class CategoryController {
 
 
 
-    @GetMapping("/admin/categories")
+    @GetMapping("/categories")
     public List<CategoryResponse> fetchCategories() {
         return categoryService.readCategories();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/admin/categories/{categoryId}")
+    @DeleteMapping("/categories/{categoryId}")
     public void delete(@PathVariable String categoryId) {
         try {
             categoryService.deleteCategory(categoryId);
