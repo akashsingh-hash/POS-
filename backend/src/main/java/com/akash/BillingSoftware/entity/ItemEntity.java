@@ -37,7 +37,7 @@ public class ItemEntity {
     private String imgUrl;
     private String imgPublicId;
     @ManyToOne
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "categoryId", nullable = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     private CategoryEntity categoryEntity;
 }

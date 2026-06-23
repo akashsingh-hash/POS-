@@ -33,6 +33,7 @@
     right: 8px;
     width: 10px;
     height: 10px;
-    background-color: white;
+    background-color: var(--accent-coral);
+    box-shadow: 0 0 8px var(--accent-coral);
     border-radius: 50%;
 }

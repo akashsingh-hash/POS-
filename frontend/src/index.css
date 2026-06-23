@@ -1,10 +1,213 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Poppins:wght@400;600;700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #121212;
+  --accent-coral: #ff5a53;
+  --accent-coral-glow: rgba(255, 90, 83, 0.25);
+  --accent-blue: #3b82f6;
+  --accent-amber: #f59e0b;
+  --accent-emerald: #10b981;
+  --glass-bg: rgba(10, 10, 10, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --card-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.8);
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: 'Outfit',sans-serif !important;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Outfit', 'Poppins', sans-serif !important;
+}
+
+body {
+  background: radial-gradient(circle at 50% 50%, #0d0d0d 0%, #000000 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-coral);
+}
+
+/* Base Card Overrides & Glassmorphism */
+.card, .glass-card {
+  background: var(--bg-secondary) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--card-shadow) !important;
+  transition: var(--transition-smooth) !important;
+  color: var(--text-main) !important;
+}
+
+/* 3D Perspective Hover Effect */
+.glass-card:hover, .product-card:hover, .form-container:hover {
+  border-color: rgba(255, 90, 83, 0.3) !important;
+  box-shadow: 0 15px 45px 0 rgba(255, 90, 83, 0.12) !important;
+  transform: translateY(-4px) perspective(1000px) rotateX(1deg) rotateY(0.5deg) !important;
+}
+
+/* Inputs & Form Elements */
+.form-control, .glass-input {
+  background: #121212 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: var(--text-main) !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.form-control:focus, .glass-input:focus {
+  background: #141414 !important;
+  border-color: var(--accent-coral) !important;
+  box-shadow: 0 0 12px var(--accent-coral-glow) !important;
+  outline: none !important;
+}
+
+.form-control::placeholder, .glass-input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Premium Coral Button */
+.btn-glow, .btn-warning, .btn-primary {
+  background: var(--accent-coral) !important;
+  border: 1px solid var(--accent-coral) !important;
+  color: #ffffff !important;
+  padding: 10px 20px;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: var(--transition-smooth) !important;
+  box-shadow: 0 4px 15px rgba(255, 90, 83, 0.2) !important;
+}
+
+.btn-glow:hover, .btn-warning:hover, .btn-primary:hover {
+  background: #ff473f !important;
+  border-color: #ff473f !important;
+  transform: translateY(-1px) scale(1.02) !important;
+  box-shadow: 0 6px 20px rgba(255, 90, 83, 0.35) !important;
+}
+
+.btn-glow:disabled, .btn-warning:disabled, .btn-primary:disabled {
+  background: #222222 !important;
+  border-color: #222222 !important;
+  color: var(--text-muted) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Danger Button (e.g. Logout) */
+.btn-glow-danger, .btn-danger {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  padding: 8px 16px;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-glow-danger:hover, .btn-danger:hover {
+  background: rgba(255, 90, 83, 0.1) !important;
+  border-color: var(--accent-coral) !important;
+  color: var(--accent-coral) !important;
+}
+
+/* Outline Buttons */
+.btn-outline-warning, .btn-outline-light, .btn-outline-primary {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: var(--text-main) !important;
+  border-radius: 10px !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-outline-warning:hover, .btn-outline-light:hover, .btn-outline-primary:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Text Gradient Effect (Black to Coral Accent) */
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 30%, var(--accent-coral) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, #ffffff 40%, var(--accent-amber) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* Custom Badges */
+.badge-custom {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.badge-admin {
+  background: rgba(255, 90, 83, 0.1) !important;
+  color: var(--accent-coral) !important;
+  border: 1px solid rgba(255, 90, 83, 0.25) !important;
+}
+
+.badge-user {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Table overrides */
+.table {
+  color: var(--text-main) !important;
+}
+
+.table-dark {
+  background-color: transparent !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+th {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600;
 }

@@ -1,354 +1,151 @@
-🧾 BillingSoftware (POS System)
-```
-A full-stack Point of Sale (POS) web application built using:
+# 🧾 Apex POS - Full-Stack Point of Sale System
 
-Spring Boot (Backend)
+Apex POS is a premium, high-performance, and feature-rich Point of Sale (POS) system designed for retail and billing networks. Built on a modern decoupled architecture, it integrates a Spring Boot REST API backend with a responsive, dark glassmorphic React single-page application.
 
-React + Vite (Frontend)
-```
+---
 
-This system provides:
+## 🎨 Design Theme & Aesthetics
 
-🔐 Authentication & Authorization
+Apex POS features a state-of-the-art **Dark Glassmorphism** interface:
+* **Background:** Rich radial pitch-black gradient (`#000000` to `#0d0d0d`).
+* **Components:** Dark charcoal glass panels with a translucent border and backdrop blur.
+* **Accent Palette:** High-contrast, neon Coral Red-Orange (`#ff5a53`) highlights for CTAs, active states, and navigation cues.
+* **Micro-Animations:** Fluid 3D perspective hover cards and floating effects.
 
-👤 User Management
+---
 
-📂 Category Management
+## 🚀 Key Features
 
-🛍 Item Management
+* **🔐 Authentication & Role Security:** Secure JWT token-based authentication. Roles (`ROLE_USER` for Cashiers, `ROLE_ADMIN` for Admins) control dashboard views and block access to restricted routes.
+* **🛍 POS Terminal Checkout:** Responsive cashier terminal featuring category filters, live cart management, auto 18% GST tax computations, customizable discounts, and customer details checkout.
+* **📊 Executive Dashboard:** Real-time business intelligence showcasing total revenue, completed sales count, catalog item tallies, transaction logs, and printable modal invoices.
+* **📂 Catalog Management (CRUD):** Live product inventory and category management sheets with Cloudinary image hosting integrations.
+* **👤 User Control (Admin Only):** Direct administrative panels to add, register, or delete cashier/admin accounts.
 
-🖼 Image Upload with Cloudinary Integration
+---
 
-It currently represents a solid MVP foundation for a production-ready POS system.
+## 🛠 Tech Stack
 
-🚀 Project Status
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Frontend** | React + Vite | Fast SPA user interface styled with Outfit typography and custom glass CSS |
+| **Backend** | Spring Boot | REST API gateway exposing secured CRUD routes & transaction handlers |
+| **Security** | Spring Security + JWT | Stateless token authorization filter on incoming requests |
+| **Database** | MySQL | Persistent storage for orders, items, categories, and users |
+| **Storage** | Cloudinary CDN | High-performance image hosting and retrieval |
 
-The project currently includes:
+---
 
-✅ JWT Authentication
-
-✅ User Management (CRUD)
-
-✅ Category Management (CRUD)
-
-✅ Item Management (CRUD)
-
-✅ Image Upload (Cloudinary Integration)
-
-✅ Protected Backend APIs
-
-✅ React Context State Management
-
-✅ REST API Integration
-
-🛠 Tech Stack
-📌 Technologies Used
-Technology	Logo	Description
-
-## 📌 Technologies Used
-
-| Technology   | Logo | Description |
-|-------------|------|-------------|
-| React | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="30"/> | Frontend UI Library |
-| Vite | <img src="https://vitejs.dev/logo.svg" width="30"/> | Frontend Build Tool |
-| Spring Boot | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="30"/> | Backend Framework |
-| Java | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="30"/> | Backend Programming Language |
-| Maven | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg" width="30"/> | Dependency Management |
-| MySQL | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="30"/> | Relational Database |
-| JWT | <img src="https://jwt.io/img/pic_logo.svg" width="30"/> | Authentication & Authorization |
-| Cloudinary | <img src="https://res.cloudinary.com/cloudinary-marketing/image/upload/v1649720751/creative_source/Cloudinary_Logo_Stacked_White.png" width="40"/> | Image Storage & CDN |
-
-
-🎨 Frontend
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40"/> <img src="https://vitejs.dev/logo.svg" width="40"/>
-```
-React (Vite)
-
-Bootstrap
-
-React Context API
-
-Axios
-
-React Hot Toast
-```
-⚙ Backend
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="40"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="40"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg" width="40"/>
-```
-Spring Boot
-
-Java
-
-Spring Security
-
-JWT Authentication
-
-Maven
-```
-🗄 Database & Storage
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="40"/> <img src="https://res.cloudinary.com/cloudinary-marketing/image/upload/v1649720751/creative_source/Cloudinary_Logo_Stacked_White.png" width="50"/> <img src="https://jwt.io/img/pic_logo.svg" width="40"/>
-```
-MySQL (Relational Database)
-
-Cloudinary (Image Hosting)
-
-JWT (Token-based Authentication)
-```
-🏗 Architecture Overview
-```
-Frontend (React + Vite)
-        ↓
-REST API Calls (Axios)
-        ↓
-Spring Boot Backend
-        ↓
-JWT Security Filter
-        ↓
-Services Layer
-        ↓
-JPA Repositories
-        ↓
-MySQL Database
-
-Images are uploaded to Cloudinary
-
-Image URLs are stored in the database
-```
-📁 Project Structure
-🖥 Backend
-```
-backend/
-└── src/main/java/
-    ├── controller/
-    ├── service/
-    ├── repository/
-    ├── entity/
-    ├── security/
-    ├── config/
-    └── BillingSoftwareApplication.java
-```
-🌐 Frontend
-```
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   ├── context/
-│   └── main.jsx
-├── public/
-└── package.json
-```
-🔐 Authentication Flow
-```
-User Login
-   ↓
-Backend Validation
-   ↓
-JWT Token Generation
-   ↓
-Token Stored in Frontend
-   ↓
-Token Sent in Authorization Header
-   ↓
-JWT Filter Validates Request
-
- ```
-
-📦 Features Implemented
-👤 User Management
-```
-Create User
-
-Delete User
-
-View Users
-
-Role-based handling (if implemented)
-```
-
-📂 Category Management
-```
-Add Category
-
-Delete Category
-
-View All Categories
-```
-
-🛍 Item Management
+## 🏗 System Architecture
 
 ```
-Add Item with Image
-
-Delete Item
-
-View All Items
-
-Category Mapping
-
-Price Handling
+                 ┌────────────────────────────────┐
+                 │      React + Vite Client       │
+                 │    (Outfit Font, Glass CSS)    │
+                 └───────────────┬────────────────┘
+                                 │
+                            REST Calls
+                         (Axios with JWT)
+                                 │
+                                 ▼
+                 ┌────────────────────────────────┐
+                 │      Spring Boot Backend       │
+                 │      (Port 8080 / API)         │
+                 └───────┬────────────────┬───────┘
+                         │                │
+                    JPA/Hibernate    Image Upload
+                         │                │
+                         ▼                ▼
+                 ┌─────────────┐   ┌──────────────┐
+                 │    MySQL    │   │  Cloudinary  │
+                 │  Database   │   │   Service    │
+                 └─────────────┘   └──────────────┘
 ```
 
-🖼 Image Upload
+---
+
+## 📁 Directory Structure
+
+```
+POS/
+├── backend/
+│   ├── src/main/java/com/akash/BillingSoftware/
+│   │   ├── config/       # Security & CORS configurations
+│   │   ├── controller/   # REST Controllers (Auth, Categories, Items, Orders, Users)
+│   │   ├── entity/       # JPA Entities (Category, Item, Order, OrderItem, User)
+│   │   ├── filter/       # JWT request filters
+│   │   ├── repo/         # JPA Repositories
+│   │   ├── service/      # Service interfaces and implementations
+│   │   └── util/         # JWT utility helpers
+│   └── pom.xml
+└── frontend/
+    ├── src/
+    │   ├── assets/       # Media assets
+    │   ├── components/   # Shared components (Menubar, CategoryForm, RecieptPopup)
+    │   ├── context/      # AppContext global state
+    │   ├── pages/        # Main views (Explore, Dashboard, Login, Register)
+    │   ├── service/      # API Services (Axios wrappers)
+    │   ├── App.jsx       # Route guards
+    │   └── index.css     # Global glassmorphism overrides
+    └── package.json
 ```
 
-Integrated with Cloudinary
+---
 
-Remote image storage
+## 🔌 API Route Catalog
 
-URL saved in database
+| Module | Method | Route | Access | Request Body / Multipart |
+| :--- | :--- | :--- | :--- | :--- |
+| **Auth** | `POST` | `/api/v1.0/login` | Public | `{email, password}` |
+| | `POST` | `/api/v1.0/encode` | Public | `{password}` |
+| **Categories**| `GET` | `/api/v1.0/categories` | Public | None |
+| | `POST` | `/api/v1.0/admin/categories` | Admin JWT | `MultipartFormData` (category JSON + file) |
+| | `DELETE`| `/api/v1.0/admin/categories/{id}`| Admin JWT | None |
+| **Items** | `GET` | `/api/v1.0/items` | Public | None |
+| | `POST` | `/api/v1.0/admin/items` | Admin JWT | `MultipartFormData` (item JSON + file) |
+| | `DELETE`| `/api/v1.0/admin/items/{id}`| Admin JWT | None |
+| **Orders** | `POST` | `/api/v1.0/orders` | Cashier JWT | `{customerName, customerPhone, items: [{itemId, quantity}], discount}` |
+| | `GET` | `/api/v1.0/orders` | Cashier JWT | None |
+| **Users** | `GET` | `/api/v1.0/admin/users` | Admin JWT | None |
+| | `POST` | `/api/v1.0/register` | Public | `{name, email, password, role}` |
+| | `DELETE`| `/api/v1.0/admin/users/{id}`| Admin JWT | None |
 
-Image preview before upload
+---
+
+## ⚙ Installation & Execution
+
+### 🗄 Database Configuration
+Ensure MySQL is running and a database named `billingapp` is created. Update credentials inside [application.properties](file:///c:/6th%20sem/Full%20Stack/PROJECT/POS/backend/src/main/resources/application.properties):
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/billingapp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+
+# Cloudinary Setup
+cloudinary.cloud-name=YOUR_CLOUD_NAME
+cloudinary.api-key=YOUR_API_KEY
+cloudinary.api-secret=YOUR_API_SECRET
 ```
 
-⚙ Installation & Setup
-```
-✅ Prerequisites
-
-Java 17+
-
-Maven
-
-Node.js 16+
-
-MySQL
-```
-🖥 Backend Setup
-```
+### 🖥 Backend Setup
+Navigate to the `backend` folder and boot the server:
+```bash
 cd backend
-./mvnw spring-boot:run
-For Windows:
-mvnw.cmd spring-boot:run
-Build JAR:
-./mvnw clean package
-
-Backend runs at:
-
-http://localhost:8080
+mvn clean package
+mvn spring-boot:run
 ```
+The backend API is served at `http://localhost:8080/api/v1.0`.
 
-🌐 Frontend Setup
-```
+### 🌐 Frontend Setup
+Navigate to the `frontend` folder, install dependencies, and launch the dev client:
+```bash
 cd frontend
 npm install
 npm run dev
-
-Frontend runs at:
-
-http://localhost:5173
 ```
-🔑 Environment Variables
-```
-Configure inside:
+The web app is hosted at `http://localhost:5173`.
 
-backend/src/main/resources/application.properties
+---
 
-Required properties:
-
-spring.datasource.url=
-spring.datasource.username=
-spring.datasource.password=
-
-jwt.secret=
-
-cloudinary.cloud_name=
-cloudinary.api_key=
-cloudinary.api_secret=
-```
-🔌 API Overview
-
-🔐 Auth APIs
-```
-POST /auth/login
-
-POST /auth/register
-```
-📂 Category APIs
-```
-GET /categories
-
-POST /categories
-
-DELETE /categories/{id}
-```
-🛍 Item APIs
-```
-GET /items
-
-POST /items (multipart/form-data)
-
-DELETE /items/{id}
-```
-👤 User APIs
-```
-GET /users
-
-DELETE /users/{id}
-```
-🧠 Current Development Level
-
-✔ Core architecture complete
-
-✔ Authentication system implemented
-
-✔ CRUD operations functional
-
-✔ Image upload working
-
-✔ Frontend connected to backend
-
-✔ Context-based state management
-
-Project is currently in Functional MVP Stage.
-
-🚧 Planned Improvements
-```
-Update Item functionality
-
-Pagination
-
-Role-based Authorization
-
-Sales & Billing Module
-
-Invoice Generation
-
-Dashboard Analytics
-
-Docker Deployment
-
-CI/CD Pipeline
-```
-📌 Future Scope
-```
-Cart System
-
-Printable Invoices
-
-Sales History
-
-Reports & Analytics
-
-Admin Dashboard Insights
-```
-📜 License
-
-This project is currently under development.
-You may add an MIT License or your preferred license before production release.
-
-👨‍💻 Author
-
-Akash Singh
-
-Developed as a Full Stack POS System using:
-
-React
-
-Spring Boot
-
-MySQL
-
-JWT
-
-Cloudinary
+## 👨‍💻 Developed By
+* **Akash Singh**

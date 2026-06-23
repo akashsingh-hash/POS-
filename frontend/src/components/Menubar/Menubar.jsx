@@ -1,30 +1,40 @@
-import React, { useContext } from "react";
-import "./Menubar.css"; 
+import React from "react";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { assets } from "../../assets/assets";
-import { Link, useNavigate } from 'react-router-dom';
-import { AppContext } from "../../context/AppContext";
+import toast from 'react-hot-toast';
 
 const Menubar = () => {
   const navigate = useNavigate();
-  const { setAuthData } = useContext(AppContext);
+  const location = useLocation();
+  const token = localStorage.getItem('token');
+  const hasToken = token && token !== "null" && token !== "undefined";
+  const userEmail = localStorage.getItem('email');
+  const role = localStorage.getItem('role') || '';
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    setAuthData(null, null);
-    navigate("/login");
+  const isAdmin = role === 'ROLE_ADMIN' || role === 'ADMIN';
+
+  const handleLogout = () => {
+    localStorage.clear();
+    toast.success("Logged out successfully");
+    navigate('/login');
+    window.location.reload();
   };
 
+  if (!hasToken) {
+    return null; // Don't show navbar if not logged in
+  }
+
   return (
-    <>
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-2">
-        <Link className="navbar-brand" to="/">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 py-2 shadow-sm" style={{ borderBottom: '1px solid var(--glass-border)' }}>
+      <div className="container-fluid">
+        <Link className="navbar-brand d-flex align-items-center" to="/dashboard">
           <img
-            src={assets.logo}
+            src={assets.logo || "https://placehold.co/40x40?text=POS"}
             alt="Logo"
-            height="40"
+            height="36"
+            className="me-2"
           />
+          <span className="text-white fw-bold">Apex POS</span><span style={{ color: 'var(--accent-coral)', fontSize: '1.6rem', lineHeight: '1' }}>.</span>
         </Link>
 
         <button
@@ -39,74 +49,52 @@ const Menubar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse p-2" id="navbarNav">
+        <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
+              <Link className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`} to="/dashboard">
                 Dashboard
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/explore">
-                Explore
+              <Link className={`nav-link ${location.pathname === '/explore' ? 'active' : ''}`} to="/explore">
+                POS Terminal
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/items">
+              <Link className={`nav-link ${location.pathname === '/items' ? 'active' : ''}`} to="/items">
                 Manage Items
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/category">
+              <Link className={`nav-link ${location.pathname === '/category' ? 'active' : ''}`} to="/category">
                 Manage Categories
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/users">
-                Manage Users
-              </Link>
-            </li>
+            {isAdmin && (
+              <li className="nav-item">
+                <Link className={`nav-link ${location.pathname === '/users' ? 'active' : ''}`} to="/users">
+                  Manage Users
+                </Link>
+              </li>
+            )}
           </ul>
 
-          {/* User Profile Dropdown */}
-          <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li className="nav-item dropdown">
-              <a 
-                href="#" 
-                className="nav-link dropdown-toggle" 
-                id="navbarDropdown"
-                role="button" 
-                data-bs-toggle="dropdown" 
-                aria-expanded="false"
-              >
-                <img src={assets.profile} alt="Profile" height={32} width={32} />
-              </a>
-              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li>
-                  <Link className="dropdown-item" to="/settings">
-                    Settings
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/activity">
-                    Activity Log 
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <button className="dropdown-item" onClick={logout}>
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div className="d-flex align-items-center gap-3">
+            <div className="d-flex flex-column align-items-end text-light">
+              <span className="fw-semibold text-white" style={{ fontSize: '0.85rem' }}>{userEmail}</span>
+              <span className={`badge badge-custom ${isAdmin ? 'badge-admin' : 'badge-user'}`} style={{ fontSize: '0.7rem' }}>
+                {isAdmin ? 'Admin' : 'Cashier'}
+              </span>
+            </div>
+            
+            <button className="btn btn-glow-danger py-1.5 px-3" onClick={handleLogout}>
+              <i className="bi bi-box-arrow-right me-1"></i> Logout
+            </button>
+          </div>
         </div>
-      </nav>
-      {/* End Navbar */}
-    </>
+      </div>
+    </nav>
   );
 };
 
