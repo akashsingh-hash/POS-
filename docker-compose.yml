@@ -23,9 +23,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/billingapp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
-      - CLOUDINARY_CLOUD_NAME=dfsc2vptp
-      - CLOUDINARY_API_KEY=879483321528654
-      - CLOUDINARY_API_SECRET=Wv3o3b1T46b2b5xP89v_n7z_54A
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
     depends_on:
       - mysql-db
 

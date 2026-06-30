@@ -35,8 +35,7 @@ const Menubar = () => {
 
   const publicLinks = [
     { name: 'Features', path: '/features' },
-    { name: 'How to Use', path: '/about' },
-    { name: 'Support', path: 'support_modal' }
+    { name: 'How to Use', path: '/about' }
   ];
 
   const privateLinks = [
@@ -46,8 +45,7 @@ const Menubar = () => {
     { name: 'Manage Categories', path: '/category' },
     ...(isAdmin ? [{ name: 'Manage Users', path: '/users' }] : []),
     { name: 'Features', path: '/features' },
-    { name: 'How to Use', path: '/about' },
-    { name: 'Support', path: 'support_modal' }
+    { name: 'How to Use', path: '/about' }
   ];
 
   const currentLinks = hasToken ? privateLinks : publicLinks;
