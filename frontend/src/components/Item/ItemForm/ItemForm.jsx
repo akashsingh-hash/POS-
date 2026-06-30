@@ -38,12 +38,14 @@ const ItemForm = () => {
     setLoading(true);
     const formData = new FormData();
     // Wrap item fields in the JSON object format expected by ItemController
-    formData.append("item", JSON.stringify({
+    // Send as application/json Blob to prevent Spring Boot @RequestPart Content-Type mismatches
+    const itemBlob = new Blob([JSON.stringify({
       name: data.name,
       price: parseFloat(data.price),
       categoryId: data.categoryId,
       description: data.description
-    }));
+    })], { type: 'application/json' });
+    formData.append("item", itemBlob);
     formData.append("file", image);
 
     try {
@@ -67,15 +69,15 @@ const ItemForm = () => {
   return (
     <div className="mx-2 mt-2">
       <div className="row">
-        <div className="card glass-card col-md-12 p-3 text-light">
+        <div className="card glass-card col-md-12 p-3">
           <div className="card-body">
-            <h4 className="mb-4 text-gradient-amber">Add New Product Item</h4>
+            <h4 className="mb-4 text-gradient">Add New Product Item</h4>
             
             <form onSubmit={onSubmitHandler}>
               {/* Image Upload Box */}
               <div className="mb-3 text-center">
-                <label htmlFor="image" className="form-label d-block text-start text-white">Product Image *</label>
-                <label htmlFor="image" className="d-inline-block p-2 rounded cursor-pointer" style={{ border: '2px dashed var(--glass-border)', background: 'rgba(15, 23, 42, 0.4)' }}>
+                <label htmlFor="image" className="form-label d-block text-start text-[#192837] font-semibold">Product Image *</label>
+                <label htmlFor="image" className="d-inline-block p-2 rounded cursor-pointer animate-pulse" style={{ border: '2px dashed var(--glass-border)', background: 'rgba(25, 40, 55, 0.05)' }}>
                   <img 
                     src={image ? URL.createObjectURL(image) : (assets.upload || "https://placehold.co/100x100?text=Upload")} 
                     alt="Upload Preview" 
@@ -94,7 +96,7 @@ const ItemForm = () => {
 
               {/* Item Name */}
               <div className="mb-3">
-                <label htmlFor="name" className="form-label text-white">Item Name *</label>
+                <label htmlFor="name" className="form-label text-[#192837] font-semibold">Item Name *</label>
                 <input 
                   type="text" 
                   name="name" 
@@ -109,7 +111,7 @@ const ItemForm = () => {
 
               {/* Category Dropdown */}
               <div className="mb-3">
-                <label htmlFor="categoryId" className="form-label text-white">Category *</label>
+                <label htmlFor="categoryId" className="form-label text-[#192837] font-semibold">Category *</label>
                 <select 
                   name="categoryId" 
                   id="categoryId" 
@@ -129,7 +131,7 @@ const ItemForm = () => {
 
               {/* Price */}
               <div className="mb-3">
-                <label htmlFor="price" className="form-label text-white">Price (₹) *</label>
+                <label htmlFor="price" className="form-label text-[#192837] font-semibold">Price (₹) *</label>
                 <input 
                   type="number" 
                   step="0.01"
@@ -145,7 +147,7 @@ const ItemForm = () => {
 
               {/* Description */}
               <div className="mb-4">
-                <label htmlFor="description" className="form-label text-white">Description</label>
+                <label htmlFor="description" className="form-label text-[#192837] font-semibold">Description</label>
                 <textarea 
                   name="description" 
                   id="description" 

@@ -53,14 +53,14 @@ const UserForm = ({ setUsers }) => {
   return (
     <div className="mx-2 mt-2">
       <div className="row">
-        <div className="card glass-card col-md-12 p-3 text-light">
+        <div className="card glass-card col-md-12 p-3">
           <div className="card-body">
-            <h4 className="mb-4 text-gradient-amber">Register New User</h4>
+            <h4 className="mb-4 text-gradient">Register New User</h4>
             
             <form onSubmit={onSubmitHandler}>
               {/* Full Name */}
               <div className="mb-3">
-                <label htmlFor="name" className="form-label text-white">Full Name</label>
+                <label htmlFor="name" className="form-label text-[#192837] font-semibold">Full Name</label>
                 <input 
                   type="text" 
                   name="name" 
@@ -75,7 +75,7 @@ const UserForm = ({ setUsers }) => {
 
               {/* Email Address */}
               <div className="mb-3">
-                <label htmlFor="email" className="form-label text-white">Email Address</label>
+                <label htmlFor="email" className="form-label text-[#192837] font-semibold">Email Address</label>
                 <input 
                   type="email" 
                   name="email" 
@@ -90,7 +90,7 @@ const UserForm = ({ setUsers }) => {
 
               {/* Password */}
               <div className="mb-3">
-                <label htmlFor="password" className="form-label text-white">Password</label>
+                <label htmlFor="password" className="form-label text-[#192837] font-semibold">Password</label>
                 <input 
                   type="password" 
                   name="password" 
@@ -105,7 +105,7 @@ const UserForm = ({ setUsers }) => {
 
               {/* User Role */}
               <div className="mb-4">
-                <label htmlFor="role" className="form-label text-white">Access Role</label>
+                <label htmlFor="role" className="form-label text-[#192837] font-semibold">Access Role</label>
                 <select 
                   name="role" 
                   id="role" 

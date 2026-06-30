@@ -8,6 +8,8 @@ import ManageItem from './pages/ManageItems/ManageItem';
 import Explore from './pages/Explore/Explore';
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import About from "./pages/About/About";
+import Features from "./pages/Features/Features";
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
@@ -48,6 +50,14 @@ const App = () => {
         <Route 
           path="/items" 
           element={hasToken ? <ManageItem /> : <Navigate to="/login" replace />} 
+        />
+        <Route 
+          path="/about" 
+          element={<About />} 
+        />
+        <Route 
+          path="/features" 
+          element={<Features />} 
         />
         
         {/* Admin Only Route */}

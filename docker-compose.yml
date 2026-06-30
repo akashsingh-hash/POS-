@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: pos-mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: billingapp
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: pos-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/billingapp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - CLOUDINARY_CLOUD_NAME=dfsc2vptp
+      - CLOUDINARY_API_KEY=879483321528654
+      - CLOUDINARY_API_SECRET=Wv3o3b1T46b2b5xP89v_n7z_54A
+    depends_on:
+      - mysql-db
+
+  frontend:
+    build: ./frontend
+    container_name: pos-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
