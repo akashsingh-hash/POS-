@@ -65,8 +65,8 @@ const About = () => {
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-2">
                 <span className="badge-custom badge-admin self-start text-xs font-bold px-2.5 py-0.5" style={{ borderRadius: '50px' }}>Administrator Role</span>
                 <div className="mt-2 text-xs font-semibold text-slate-500 flex flex-col gap-1">
-                  <div><strong className="text-[#192837]">Login Email:</strong> <code className="text-[#7342E2] bg-slate-100 px-1 py-0.5 rounded">singh0810.akash@gmail.com</code></div>
-                  <div><strong className="text-[#192837]">Password:</strong> <code className="text-[#7342E2] bg-slate-100 px-1 py-0.5 rounded">password</code></div>
+                  <div><strong className="text-[#192837]">Login Email:</strong> <code className="text-[#7342E2] bg-slate-100 px-1 py-0.5 rounded">akash@admin.com</code></div>
+                  <div><strong className="text-[#192837]">Password:</strong> <code className="text-[#7342E2] bg-slate-100 px-1 py-0.5 rounded">Akash@0786</code></div>
                 </div>
                 <div className="text-slate-500 small font-medium mt-2 leading-normal">
                   🔓 **Access Rights:** Full Inventory Catalog CRUD, Category settings, Cloudinary image upload forms, and registering/deleting cashier accounts.
